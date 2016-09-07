@@ -39,6 +39,10 @@ public:
 
   void Pulse(int speedms);
 
+  void PulseUp(int speedms);
+
+  void PulseDown(int speedms);
+
   void Sing(int note);
 
   void Dim(int brightness);

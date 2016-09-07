@@ -35,11 +35,13 @@ public:
 
   void Wait(int Time);
 
-  void Flash(int speed);
+  void Flash(int speedms);
 
-  void Pulse(int speed);
+  void Pulse(int speedms);
 
   void Sing(int note);
+
+  void Dim(int brightness);
 
 private:
 

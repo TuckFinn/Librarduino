@@ -34,14 +34,14 @@ void Output::Wait(int Time)
   delay(Time);
 }
 
-void Output::Flash(int speed){
+void Output::Flash(int speedms){
   digitalWrite(_pin,HIGH);
   delay(speed);
   digitalWrite(_pin,LOW);
   delay(speed);
 }
 
-void Output::Pulse(int speed)
+void Output::Pulse(int speedms)
 {
   for(int i = 0; i <= 255; i += speed){
     analogWrite(_pin, i);
@@ -56,7 +56,9 @@ void Output::Sing(int note)
   tone(_pin,note,200);
 }
 
-
+void Output::Dim(int brightness){
+  analogWrite(_pin, brightness)
+}
 
 //Input Functions:
 

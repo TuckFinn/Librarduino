@@ -36,17 +36,17 @@ void Output::Wait(int Time)
 
 void Output::Flash(int speedms){
   digitalWrite(_pin,HIGH);
-  delay(speed);
+  delay(speedms);
   digitalWrite(_pin,LOW);
-  delay(speed);
+  delay(speedms);
 }
 
 void Output::Pulse(int speedms)
 {
-  for(int i = 0; i <= 255; i += speed){
+  for(int i = 0; i <= 255; i += speedms){
     analogWrite(_pin, i);
   }
-  for(int i = 255; i >= 0; i -= speed){
+  for(int i = 255; i >= 0; i -= speedms){
     analogWrite(_pin, i);
   }
 }
@@ -57,7 +57,7 @@ void Output::Sing(int note)
 }
 
 void Output::Dim(int brightness){
-  analogWrite(_pin, brightness)
+  analogWrite(_pin, map(brightness,0,100,0,255));
 }
 
 //Input Functions:

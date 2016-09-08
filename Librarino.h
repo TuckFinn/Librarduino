@@ -58,8 +58,11 @@ class Input
 {
 public:
   Input(int pin);
-  int Check();
+
+  //int Check();
+  
   int Read();
+  
   int Print(){
     if(_pin >= 14){
     Serial.println(Read());

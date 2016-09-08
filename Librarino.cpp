@@ -104,13 +104,18 @@ Input::Input(int pin){
 }
 
 //Get digital value
-int Input::Check(){
+/*int Input::Check(){
   digitalRead(_pin);
-}
+}*/
 
 //Get analog value
 int Input::Read(){
-  analogRead(_pin);
+  if(_pin >= 14){
+    analogRead(_pin);
+  }
+  else if(_pin <= 13){
+    digitalRead(_pin);
+  }
 }
 
 /*int Input::Print(){

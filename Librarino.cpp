@@ -38,6 +38,11 @@ void Output::Wait(int Time)
   delay(Time);
 }
 
+void Output::Pause(int Time)
+{
+  delay(Time);
+}
+
 //Output flashes on and off
 void Output::Flash(int speedms){
   digitalWrite(_pin,HIGH);

@@ -64,12 +64,7 @@ public:
   int Read();
   
   int Print(){
-    if(_pin >= 14){
     Serial.println(Read());
-    }
-    else{
-      Serial.println(Check());
-    }
   }
 
 private:

@@ -35,7 +35,7 @@ public:
 
   void Wait(int Time);
 
-  void Pause(int Time)
+  void Pause(int Time);
 
   void Flash(int speedms);
 
@@ -64,13 +64,30 @@ public:
   //int Check();
   
   int Read();
-  
+
+  //Print input value
   int Print(){
     Serial.println(Read());
   }
 
 private:
   int _pin;
+};
+
+class Sensor
+{
+public:
+  Sensor(int pin);
+
+  int Read();
+
+  int Print(){
+    Serial.println(Read());
+  }
+
+private:
+  int _pin;
+
 };
 
 #endif

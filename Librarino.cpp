@@ -126,3 +126,12 @@ int Input::Read(){
 /*int Input::Print(){
   Serial.println(Input::Read());
 }*/
+
+Sensor::Sensor(int pin){
+  _pin = pin;
+}
+
+int Sensor::Read(){
+  analogRead(_pin);
+}
+

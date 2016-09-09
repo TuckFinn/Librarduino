@@ -35,7 +35,7 @@ public:
 
   void Wait(int Time);
 
-  void Pause(int Time)
+  void Pause(int Time);
 
   void Flash(int speedms);
 

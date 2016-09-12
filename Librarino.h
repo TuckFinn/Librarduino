@@ -23,31 +23,31 @@ Released into the public domain
 
 //Functions Here:
 
-class Output
+class DOER
 
 {
 public:
-  Output(int pin);
+  DOER(int pin);
 
-  void On();
+  void ON();
 
-  void Off();
+  void OFF();
 
-  void Wait(int Time);
+  void WAIT(int Time);
 
-  void Pause(int Time);
+  void PAUSE(int Time);
 
-  void Flash(int speedms);
+  void FLASH(int speedms);
 
-  void Pulse(int speedms);
+  void PULSE(int speedms);
 
-  void PulseUp(int speedms);
+  void PULSEUP(int speedms);
 
-  void PulseDown(int speedms);
+  void PULSEDOWN(int speedms);
 
-  void Sing(int note);
+  void SING(int note);
 
-  void Dim(int brightness);
+  void DIM(int brightness);
 
 private:
 
@@ -56,33 +56,33 @@ int _pin;
 };
 
 
-class Input
+class TOGGLE
 {
 public:
-  Input(int pin);
+  TOGGLE(int pin);
 
   //int Check();
   
-  int Read();
+  int READ();
 
   //Print input value
-  int Print(){
-    Serial.println(Read());
+  int PRINT(){
+    Serial.println(READ());
   }
 
 private:
   int _pin;
 };
 
-class Sensor
+class SENSOR
 {
 public:
-  Sensor(int pin);
+  SENSOR(int pin);
 
-  int Read();
+  int READ();
 
-  int Print(){
-    Serial.println(Read());
+  int PRINT(){
+    Serial.println(READ());
   }
 
 private:

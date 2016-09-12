@@ -13,7 +13,7 @@
 //Output Functions:
 
 //Sets PinMode
-Output::Output(int pin)
+DOER::DOER(int pin)
 {
   pinMode(pin,OUTPUT);
 
@@ -21,30 +21,30 @@ Output::Output(int pin)
 }
 
 //Turns output on
-void Output::On()
+void DOER::ON()
 {
   digitalWrite(_pin,HIGH);
 }
 
 //Turns output off
-void Output::Off()
+void DOER::OFF()
 {
   digitalWrite(_pin,LOW);
 }
 
 //Output waits in current state
-void Output::Wait(int Time)
+void DOER::WAIT(int Time)
 {
   delay(Time);
 }
 
-void Output::Pause(int Time)
+void DOER::PAUSE(int Time)
 {
   delay(Time);
 }
 
 //Output flashes on and off
-void Output::Flash(int speedms){
+void DOER::FLASH(int speedms){
   digitalWrite(_pin,HIGH);
   delay(abs(map(speedms,0,1000,-1000,0)));
   digitalWrite(_pin,LOW);
@@ -52,12 +52,12 @@ void Output::Flash(int speedms){
 }
 
 //Set output brightness
-void Output::Dim(int brightness){
+void DOER::DIM(int brightness){
   analogWrite(_pin, map(brightness,0,100,0,255));
 }
 
 //Output pulses on and off
-void Output::Pulse(int speedms)
+void DOER::PULSE(int speedms)
 {
   for(int i = 0; i < 255; i = i + speedms){
     analogWrite(_pin, i);
@@ -70,7 +70,7 @@ void Output::Pulse(int speedms)
 }
 
 //Output pulses up
-void Output::PulseUp(int speedms)
+void DOER::PULSEUP(int speedms)
 {
   for(int i = 0; i < 255; i = i + speedms){
     analogWrite(_pin, i);
@@ -79,7 +79,7 @@ void Output::PulseUp(int speedms)
 }
 
 //Output pulses down
-void Output::PulseDown(int speedms)
+void DOER::PULSEDOWN(int speedms)
 {
   for(int i = 255; i > 0; i = i - speedms){
     analogWrite(_pin, i);
@@ -88,7 +88,7 @@ void Output::PulseDown(int speedms)
 }
 
 //Output plays note
-void Output::Sing(int note)
+void DOER::SING(int note)
 {
   tone(_pin,note,200);
 }
@@ -97,7 +97,7 @@ void Output::Sing(int note)
 //Input Functions:
 
 //Sets input pinMode
-Input::Input(int pin){
+TOGGLE::TOGGLE(int pin){
   Serial.begin(9600);
   if(pin <= 13){
     pinMode(pin, INPUT_PULLUP);
@@ -114,24 +114,19 @@ Input::Input(int pin){
 }*/
 
 //Get analog value
-int Input::Read(){
-  if(_pin >= 14){
-    analogRead(_pin);
-  }
-  else if(_pin <= 13){
-    digitalRead(_pin);
-  }
+int TOGGLE::READ(){
+  digitalRead(_pin);
 }
 
 /*int Input::Print(){
   Serial.println(Input::Read());
 }*/
 
-Sensor::Sensor(int pin){
+SENSOR::SENSOR(int pin){
   _pin = pin;
 }
 
-int Sensor::Read(){
+int SENSOR::READ(){
   analogRead(_pin);
 }
 

@@ -7,8 +7,8 @@ Released into the public domain
 
 */
 
-#ifndef Librarino_h
-#define Librarino_h
+#ifndef Librarduino_h
+#define Librarduino_h
 
 #include<Arduino.h>
 
@@ -28,6 +28,7 @@ class DOER
 {
 public:
   DOER(int pin);
+// GENERAL OUTPUT FUNCTIONS
 
   void ON();
 
@@ -37,17 +38,28 @@ public:
 
   void PAUSE(int Time);
 
+  int PIN();
+
+//LED SPECIFIC FUNCTIONS
+
   void FLASH(int speedms);
 
+  void FLASHREPEAT(int speedms, int num);
+
+  void DIM(int brightness);
+
   void PULSE(int speedms);
+
+  void PULSEREPEAT(int speedms, int num);
 
   void PULSEUP(int speedms);
 
   void PULSEDOWN(int speedms);
 
+// SPEAKER SPECIFIC FUNCTIONS
+
   void SING(int note);
 
-  void DIM(int brightness);
 
 private:
 
@@ -60,15 +72,16 @@ class TOGGLE
 {
 public:
   TOGGLE(int pin);
-
-  //int Check();
   
   int READ();
 
-  //Print input value
-  int PRINT(){
-    Serial.println(READ());
-  }
+  void PRINT();
+
+  int PIN();
+
+  void LIGHT(DOER pin);
+
+  void SING(DOER pin, int freq);
 
 private:
   int _pin;
@@ -81,9 +94,13 @@ public:
 
   int READ();
 
-  int PRINT(){
-    Serial.println(READ());
-  }
+  void PRINT();
+
+  int PIN();
+
+  void LIGHT(DOER pin);
+
+  void SING(DOER pin);
 
 private:
   int _pin;

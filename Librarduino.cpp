@@ -7,7 +7,7 @@
 // $Id: Funduino.cpp,v 1.0 2016/08/31$
 
 #include<Arduino.h>
-#include<Librarino.h>
+#include<Librarduino.h>
 
 
 //Output Functions:
@@ -46,9 +46,18 @@ void DOER::PAUSE(int Time)
 //Output flashes on and off
 void DOER::FLASH(int speedms){
   digitalWrite(_pin,HIGH);
-  delay(abs(map(speedms,0,1000,-1000,0)));
+  delay(2000/speedms);
   digitalWrite(_pin,LOW);
-  delay(speedms);
+  delay(2000/speedms);
+}
+
+void DOER::FLASHREPEAT(int speedms, int num){
+  for(int i = 0; i < num; i++){
+    digitalWrite(_pin,HIGH);
+    delay(2000/speedms);
+    digitalWrite(_pin,LOW);
+    delay(2000/speedms);
+  }
 }
 
 //Set output brightness
@@ -66,6 +75,21 @@ void DOER::PULSE(int speedms)
   for(int i = 255; i > 0; i = i - speedms){
     analogWrite(_pin, i);
     delay(20);
+  }
+  digitalWrite(_pin, LOW);
+}
+
+void DOER::PULSEREPEAT(int speedms, int num){
+  for(int i = 0; i < num; i++){
+    for(int i = 0; i < 255; i = i + speedms){
+    analogWrite(_pin, i);
+    delay(20);
+  }
+  for(int i = 255; i > 0; i = i - speedms){
+    analogWrite(_pin, i);
+    delay(20);
+  }
+  digitalWrite(_pin, LOW);
   }
 }
 
@@ -88,9 +112,12 @@ void DOER::PULSEDOWN(int speedms)
 }
 
 //Output plays note
-void DOER::SING(int note)
-{
+void DOER::SING(int note){
   tone(_pin,note,200);
+}
+
+int DOER::PIN(){
+  return _pin;
 }
 
 
@@ -118,6 +145,25 @@ int TOGGLE::READ(){
   digitalRead(_pin);
 }
 
+void TOGGLE::PRINT(){
+    Serial.println(READ());
+  }
+
+void TOGGLE::LIGHT(DOER pin){
+  if (READ() == 1){
+    digitalWrite(pin.PIN(),LOW);
+  }
+  else{
+    digitalWrite(pin.PIN(),HIGH);
+  }
+}
+
+void TOGGLE::SING(DOER pin, int freq = 440){
+  if (digitalRead(pin.PIN()) == 0){
+    tone(pin.PIN(), freq, 200);
+  }
+}
+
 /*int Input::Print(){
   Serial.println(Input::Read());
 }*/
@@ -130,3 +176,18 @@ int SENSOR::READ(){
   analogRead(_pin);
 }
 
+void SENSOR::PRINT(){
+    Serial.println(READ());
+  }
+
+void SENSOR::LIGHT(DOER pin){
+  int val = analogRead(_pin);
+  val = map(val, 0, 1023, 0, 255);
+  analogWrite(pin.PIN(),val);
+}
+
+void SENSOR::SING(DOER pin){
+  int val = analogRead(PIN());
+  val = map(val, 0, 1023, 200, 500);
+  tone(pin.PIN(), val, 200);
+}

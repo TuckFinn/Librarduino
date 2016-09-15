@@ -183,8 +183,7 @@ void loop() {
   delay(3000);
   Serial.println();
   TypeText("Open the next tutorial for more!");
-  Serial.println();
-  Serial.println();
-  Serial.println();
 
+  while(answer != 'R'){
+  }
 }

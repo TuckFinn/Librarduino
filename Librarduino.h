@@ -11,6 +11,7 @@ Released into the public domain
 #define Librarduino_h
 
 #include<Arduino.h>
+#include<pitches.h>
 
 //Constants Here:
 
@@ -58,12 +59,14 @@ public:
 
 // SPEAKER SPECIFIC FUNCTIONS
 
-  void SING(int note);
+  void SING(int note = 440);
+
+  void SINGSONG(int note1, int note2, int note3, int note4);
 
 
 private:
 
-int _pin;
+int _pinD;
 
 };
 
@@ -77,14 +80,20 @@ public:
 
   void PRINT();
 
+  void WAIT();
+
   int PIN();
 
   void LIGHT(DOER pin);
 
-  void SING(DOER pin, int freq);
+  void FLASH(DOER pin, int speedms = 10);
+
+  void PULSE(DOER pin, int speedms = 10);
+
+  void SING(DOER pin, int freq = 440);
 
 private:
-  int _pin;
+  int _pinT;
 };
 
 class SENSOR
@@ -100,10 +109,12 @@ public:
 
   void LIGHT(DOER pin);
 
+  void FLASH(DOER pin);
+
   void SING(DOER pin);
 
 private:
-  int _pin;
+  int _pinS;
 
 };
 

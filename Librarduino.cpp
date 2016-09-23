@@ -7,6 +7,7 @@
 // $Id: Funduino.cpp,v 1.0 2016/08/31$
 
 #include<Arduino.h>
+#include<pitches.h>
 #include<Librarduino.h>
 
 
@@ -17,19 +18,19 @@ DOER::DOER(int pin)
 {
   pinMode(pin,OUTPUT);
 
-  _pin = pin;
+  _pinD = pin;
 }
 
 //Turns output on
 void DOER::ON()
 {
-  digitalWrite(_pin,HIGH);
+  digitalWrite(_pinD,HIGH);
 }
 
 //Turns output off
 void DOER::OFF()
 {
-  digitalWrite(_pin,LOW);
+  digitalWrite(_pinD,LOW);
 }
 
 //Output waits in current state
@@ -45,51 +46,51 @@ void DOER::PAUSE(int Time)
 
 //Output flashes on and off
 void DOER::FLASH(int speedms){
-  digitalWrite(_pin,HIGH);
+  digitalWrite(_pinD,HIGH);
   delay(2000/speedms);
-  digitalWrite(_pin,LOW);
+  digitalWrite(_pinD,LOW);
   delay(2000/speedms);
 }
 
 void DOER::FLASHREPEAT(int speedms, int num){
   for(int i = 0; i < num; i++){
-    digitalWrite(_pin,HIGH);
+    digitalWrite(_pinD,HIGH);
     delay(2000/speedms);
-    digitalWrite(_pin,LOW);
+    digitalWrite(_pinD,LOW);
     delay(2000/speedms);
   }
 }
 
 //Set output brightness
 void DOER::DIM(int brightness){
-  analogWrite(_pin, map(brightness,0,100,0,255));
+  analogWrite(_pinD, map(brightness,0,100,0,255));
 }
 
 //Output pulses on and off
 void DOER::PULSE(int speedms)
 {
   for(int i = 0; i < 255; i = i + speedms){
-    analogWrite(_pin, i);
+    analogWrite(_pinD, i);
     delay(20);
   }
   for(int i = 255; i > 0; i = i - speedms){
-    analogWrite(_pin, i);
+    analogWrite(_pinD, i);
     delay(20);
   }
-  digitalWrite(_pin, LOW);
+  digitalWrite(_pinD, LOW);
 }
 
 void DOER::PULSEREPEAT(int speedms, int num){
   for(int i = 0; i < num; i++){
     for(int i = 0; i < 255; i = i + speedms){
-    analogWrite(_pin, i);
+    analogWrite(_pinD, i);
     delay(20);
   }
   for(int i = 255; i > 0; i = i - speedms){
-    analogWrite(_pin, i);
+    analogWrite(_pinD, i);
     delay(20);
   }
-  digitalWrite(_pin, LOW);
+  digitalWrite(_pinD, LOW);
   }
 }
 
@@ -97,7 +98,7 @@ void DOER::PULSEREPEAT(int speedms, int num){
 void DOER::PULSEUP(int speedms)
 {
   for(int i = 0; i < 255; i = i + speedms){
-    analogWrite(_pin, i);
+    analogWrite(_pinD, i);
     delay(20);
   }
 }
@@ -105,19 +106,30 @@ void DOER::PULSEUP(int speedms)
 //Output pulses down
 void DOER::PULSEDOWN(int speedms)
 {
-  for(int i = 255; i > 0; i = i - speedms){
-    analogWrite(_pin, i);
-    delay(20);
-  }
+  	for(int i = 255; i > 0; i = i - speedms){
+    	analogWrite(_pinD, i);
+  		delay(20);
+  	}
 }
 
 //Output plays note
 void DOER::SING(int note){
-  tone(_pin,note,200);
+  	tone(_pinD,note,200);
+}
+
+void DOER::SINGSONG(int note1, int note2, int note3, int note4){
+	tone(_pinD,note1,250);
+	delay(10);
+	tone(_pinD,note2,250);
+	delay(10);
+	tone(_pinD,note3,250);
+	delay(10);
+	tone(_pinD,note4,250);
+	delay(10);
 }
 
 int DOER::PIN(){
-  return _pin;
+  return _pinD;
 }
 
 
@@ -126,13 +138,8 @@ int DOER::PIN(){
 //Sets input pinMode
 TOGGLE::TOGGLE(int pin){
   Serial.begin(9600);
-  if(pin <= 13){
-    pinMode(pin, INPUT_PULLUP);
-    _pin = pin;
-  }
-  else{
-    _pin = pin;
-  }
+  pinMode(pin, INPUT_PULLUP);
+  _pinT = pin;
 }
 
 //Get digital value
@@ -142,26 +149,57 @@ TOGGLE::TOGGLE(int pin){
 
 //Get analog value
 int TOGGLE::READ(){
-  digitalRead(_pin);
+  digitalRead(_pinT);
 }
 
 void TOGGLE::PRINT(){
     Serial.println(READ());
   }
 
-void TOGGLE::LIGHT(DOER pin){
-  if (READ() == 1){
-    digitalWrite(pin.PIN(),LOW);
-  }
-  else{
-    digitalWrite(pin.PIN(),HIGH);
-  }
+void TOGGLE::WAIT(){
+	while (digitalRead(_pinT) == 1){
+		delay(1);
+	}
 }
 
-void TOGGLE::SING(DOER pin, int freq = 440){
-  if (digitalRead(pin.PIN()) == 0){
-    tone(pin.PIN(), freq, 200);
-  }
+void TOGGLE::LIGHT(DOER pin){
+  	if (digitalRead(_pinT) == 0){
+    	digitalWrite(pin.PIN(), HIGH);
+  	}
+  	else{
+    	digitalWrite(pin.PIN(),LOW);
+  	}
+}
+
+void TOGGLE::FLASH(DOER pin, int speedms){
+	if (digitalRead(_pinT) == 0){
+		digitalWrite(pin.PIN(),HIGH);
+		digitalWrite(pin.PIN(),HIGH);
+  		delay(2000/speedms);
+  		digitalWrite(pin.PIN(),LOW);
+  		delay(2000/speedms);
+	}
+}
+
+void TOGGLE::PULSE(DOER pin, int speedms){
+	if (digitalRead(_pinT) == 0){
+		for(int i = 0; i < 255; i = i + speedms){
+    		analogWrite(pin.PIN(), i);
+    		delay(20);
+  		}
+  		for(int i = 255; i > 0; i = i - speedms){
+    		analogWrite(pin.PIN(), i);
+    		delay(20);
+  		}
+  		digitalWrite(pin.PIN(), LOW);
+	}
+}
+
+void TOGGLE::SING(DOER pin, int freq){
+
+	if (digitalRead(_pinT) == 0){
+    	tone(pin.PIN(), freq, 200);
+  	}
 }
 
 /*int Input::Print(){
@@ -169,11 +207,11 @@ void TOGGLE::SING(DOER pin, int freq = 440){
 }*/
 
 SENSOR::SENSOR(int pin){
-  _pin = pin;
+  _pinS = pin;
 }
 
 int SENSOR::READ(){
-  analogRead(_pin);
+  analogRead(_pinS);
 }
 
 void SENSOR::PRINT(){
@@ -181,13 +219,20 @@ void SENSOR::PRINT(){
   }
 
 void SENSOR::LIGHT(DOER pin){
-  int val = analogRead(_pin);
-  val = map(val, 0, 1023, 0, 255);
-  analogWrite(pin.PIN(),val);
+  int val = map(analogRead(A0), 250, 950, -255, 0);
+  analogWrite(pin.PIN(),abs(val));
+}
+
+void SENSOR::FLASH(DOER pin){
+	int val = map(analogRead(A0), 250, 950, 0, 100);
+	digitalWrite(pin.PIN(),HIGH);
+	delay(2000/val);
+	digitalWrite(pin.PIN(),LOW);
+	delay(2000/val);
 }
 
 void SENSOR::SING(DOER pin){
-  int val = analogRead(PIN());
+  int val = analogRead(_pinS);
   val = map(val, 0, 1023, 200, 500);
   tone(pin.PIN(), val, 200);
 }

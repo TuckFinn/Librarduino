@@ -119,13 +119,13 @@ void DOER::SING(int note){
 
 void DOER::SINGSONG(int note1, int note2, int note3, int note4){
 	tone(_pinD,note1,250);
-	delay(10);
+	delay(30);
 	tone(_pinD,note2,250);
-	delay(10);
+	delay(30);
 	tone(_pinD,note3,250);
-	delay(10);
+	delay(30);
 	tone(_pinD,note4,250);
-	delay(10);
+	delay(30);
 }
 
 int DOER::PIN(){

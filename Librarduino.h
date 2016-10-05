@@ -80,7 +80,9 @@ public:
 
   void PRINT();
 
-  void WAIT();
+  void WAITON();
+
+  void WAITOFF();
 
   int PIN();
 

@@ -85,11 +85,11 @@ void DOER::PULSEREPEAT(int speedms, int num){
     for(int i = 0; i < 255; i = i + speedms){
     analogWrite(_pinD, i);
     delay(20);
-  }
-  for(int i = 255; i > 0; i = i - speedms){
-    analogWrite(_pinD, i);
-    delay(20);
-  }
+    }
+    for(int i = 255; i > 0; i = i - speedms){
+      analogWrite(_pinD, i);
+      delay(20);
+    }
   digitalWrite(_pinD, LOW);
   }
 }
@@ -181,6 +181,17 @@ void TOGGLE::FLASH(DOER pin, int speedms){
 	}
 }
 
+void TOGGLE::FLASHREPEAT(DOER pin, int speedms, int num){
+  if (digitalRead(_pinT) == 0){
+    for(int i = 0; i < num; i++){
+    digitalWrite(pin.PIN(),HIGH);
+    delay(2000/speedms);
+    digitalWrite(pin.PIN(),LOW);
+    delay(2000/speedms);
+    }
+  }
+}
+
 void TOGGLE::PULSE(DOER pin, int speedms){
 	if (digitalRead(_pinT) == 0){
 		for(int i = 0; i < 255; i = i + speedms){
@@ -193,6 +204,22 @@ void TOGGLE::PULSE(DOER pin, int speedms){
   		}
   		digitalWrite(pin.PIN(), LOW);
 	}
+}
+
+void TOGGLE::PULSEREPEAT(DOER pin, int speedms, int num){
+  if (digitalRead(_pinT) == 0){
+    for(int i = 0; i < num; i++){
+      for(int i = 0; i < 255; i = i + speedms){
+        analogWrite(pin.PIN(), i);
+        delay(20);
+      }
+      for(int i = 255; i > 0; i = i - speedms){
+      analogWrite(pin.PIN(), i);
+      delay(20);
+      }
+      digitalWrite(pin.PIN(), LOW);
+    }
+  }
 }
 
 void TOGGLE::SING(DOER pin, int freq){

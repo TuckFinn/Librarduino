@@ -88,7 +88,11 @@ public:
 
   void FLASH(DOER pin, int speedms = 10);
 
+  void FLASHREPEAT(DOER pin, int speedms, int num);
+
   void PULSE(DOER pin, int speedms = 10);
+
+  void PULSEREPEAT(DOER pin, int speedms, int num);
 
   void SING(DOER pin, int freq = 440);
 

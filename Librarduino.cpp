@@ -156,13 +156,19 @@ void TOGGLE::PRINT(){
     Serial.println(READ());
   }
 
-void TOGGLE::WAIT(){
+void TOGGLE::WAITON(){
 	while (digitalRead(_pinT) == 1){
 		delay(1);
 	}
 }
 
-void TOGGLE::LIGHT(DOER pin){
+void TOGGLE::WAITOFF(){
+  while (digitalRead(_pinT) == 0){
+    delay(1);
+  }
+}
+
+void TOGGLE::ON(DOER pin){
   	if (digitalRead(_pinT) == 0){
     	digitalWrite(pin.PIN(), HIGH);
   	}

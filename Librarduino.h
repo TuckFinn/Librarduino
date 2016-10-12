@@ -86,7 +86,7 @@ public:
 
   int PIN();
 
-  void LIGHT(DOER pin);
+  void ON(DOER pin);
 
   void FLASH(DOER pin, int speedms = 10);
 
